@@ -172,13 +172,19 @@ def correct_owner_perm(origin, dest):
     """ This method correct compare owner of the filename given in dest with the same filename in origin dict. It correct it when needed """
     tmp_origin = {}
     tmp_dest = {}
+    len_save_dir = len(save_dir) + len(day) + 1
+    len_target_dir = len(target_dir)
+    print ("length save dir list " + str(len_save_dir))
+    print ("length target dir list " + str(len_target_dir))
     for name in origin:
-        tronkated = name.split('/')
-        tronkated = tronkated[-1]
+        #tronkated = name.split('/')
+        tronkated = name[len_target_dir:]
+        print(tronkated)
         tmp_origin[tronkated] = origin[name]
     for name in dest:
-        tronkated = name.split('/')
-        tronkated = tronkated[-1]
+        #tronkated = name.split('/')
+        tronkated = name[len_save_dir:]
+        print(tronkated)
         tmp_dest[tronkated] = dest[name]
     for file, data in tmp_dest.items():
         compare = tmp_origin[file]
@@ -187,6 +193,7 @@ def correct_owner_perm(origin, dest):
             user = int(owner[0])
             group = int(owner[1])
             target = save_dir + day + '/' + file
+            print (target)
             os.chown(target, user, group)
             data['owner'] = compare['owner']
             logging('Mismatch detected on ' + file + "'s ownership. Corrected\n")
