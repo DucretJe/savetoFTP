@@ -293,8 +293,10 @@ def cleanOutFTP(ftp, target):
 def compress(file):
     """ This method compress a folder into with tar """
     import tarfile
-    with tarfile.open(save_path + 'WP-BACKUP.tar.gz', "w:gz") as tar:
-        tar.add(file)
+    output = save_path + "WP-BACKUP.tar.gz"
+    print (output)
+    with tarfile.open(output, "w:gz") as tar:
+        tar.add(file, day)
 
 def checksum(file):
     """ Calculate checksum of a file """
